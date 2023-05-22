@@ -16,24 +16,16 @@ import javax.swing.text.html.HTMLEditorKit;
 public class Game implements ActionListener {
 	
 	//panels
-	JPanel mainPanel;
-	JPanel gameEnd_pnl;
-	JPanel play_pnl;
-	JFrame frame;
+	JPanel mainPanel;	//welcome panel
+	JPanel gameEnd_pnl;	//game over panel
+	JPanel play_pnl;	//game play panel
+	JFrame frame;	//main container
 	
 	//gameEnd_pnl: labels
 	JLabel result_lbl;
 	JLabel res_time_lbl;
 	JLabel ask_replay_lbl;
 	
-	int random;
-	//JPanel p;
-
-	boolean isOver;
-	boolean isWin;
-	String resScore;
-	String resGame;
-
 	//JPanel panel = new JPanel();
 	JPanel detPanel = new JPanel();
 	JProgressBar progressbar = new JProgressBar(JProgressBar.VERTICAL, 0, 50);
@@ -68,11 +60,14 @@ public class Game implements ActionListener {
 			btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16,btn17,btn18,btn19,btn20
 	};  //buttons array
 	
-	List<Integer> correct_order = new ArrayList<>();
+	List<Integer> correct_order = new ArrayList<>(); //store clicked buttons
 	int len = buttons.length;	//total number of buttons
 	private int steps = len; // winner if completed steps
 	private int score = 0;
-	
+	boolean isOver;
+	boolean isWin;
+	String resScore;
+	String resGame;
 
 	
 	//constructor
@@ -83,21 +78,17 @@ public class Game implements ActionListener {
 		gameEnd_pnl = new JPanel();
 		play_pnl = new JPanel();
 		mainPanel = new JPanel();
-		
-		frame = new JFrame();
-		gameEnd_pnl = new JPanel();
-		play_pnl = new JPanel();
-		mainPanel = new JPanel();
-		
+				
 		gameEndScreen(); //set elements to gameEnd_pnl
 		gameOpenScreen();	//set elements to play_pnl
 		
-		mainPanel.setVisible(true);
+		mainPanel.setVisible(true); //start game
+		
 		frame.add(mainPanel);
 		frame.add(play_pnl);
+		
 		frame.setTitle("FastReact game");
 		frame.setSize(700,700);
-	
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(null);
@@ -137,12 +128,12 @@ public class Game implements ActionListener {
 		play_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-	
+				//hide mainPanel from screen and display play_pnl
 				mainPanel.setVisible(false);
 				playGame();
 				play_pnl.setVisible(true);
 				frame.add(gameEnd_pnl);
-				SwingUtilities.updateComponentTreeUI(frame);
+				SwingUtilities.updateComponentTreeUI(frame); //update frame
 			}
 		});
 		
@@ -202,7 +193,7 @@ public class Game implements ActionListener {
 		label_score.setFont(new Font("MV boli", Font.BOLD, 25));
 		label_score.setText("Score: " + getScore());
 		
-		setButtonToScreen();
+		setButtonToScreen(); //add buttons to screen
 		
 		setPlayButtonAttributes(); //setup play buttons
 		
