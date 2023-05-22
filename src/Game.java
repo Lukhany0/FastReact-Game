@@ -28,7 +28,7 @@ public class Game implements ActionListener {
 	
 	//JPanel panel = new JPanel();
 	JPanel detPanel = new JPanel();
-	JProgressBar progressbar = new JProgressBar(JProgressBar.VERTICAL, 0, 50);
+	JProgressBar progressbar = new JProgressBar(JProgressBar.VERTICAL, 0, 30);
 	HashMap<Integer, Integer> bounds = new HashMap<>(); //coordinates of (x,y) bounds for buttons
 	//width and height of buttons
 	int width = 50;
@@ -306,7 +306,7 @@ public class Game implements ActionListener {
 		progressbar.setForeground(Color.green); 
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
-			int counter = 50;
+			int counter = 30;
 			@Override
 			public void run() {
 				
