@@ -16,10 +16,10 @@ import javax.swing.text.html.HTMLEditorKit;
 public class Game implements ActionListener {
 	
 	//panels
-	JPanel mainPanel;	//welcome panel
-	JPanel gameEnd_pnl;	//game over panel
-	JPanel play_pnl;	//game play panel
-	JFrame frame;	//main container
+	JPanel mainPanel;	
+	JPanel gameEnd_pnl;	
+	JPanel play_pnl;	
+	JFrame frame;
 	
 	//gameEnd_pnl: labels
 	JLabel result_lbl;
@@ -60,9 +60,9 @@ public class Game implements ActionListener {
 			btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16,btn17,btn18,btn19,btn20
 	};  //buttons array
 	
-	List<Integer> correct_order = new ArrayList<>(); //store clicked buttons
-	int len = buttons.length;	//total number of buttons
-	private int steps = len; // winner if completed steps
+	List<Integer> correct_order = new ArrayList<>();
+	int len = buttons.length;
+	private int steps = len; 
 	private int score = 0;
 	boolean isOver;
 	boolean isWin;
@@ -97,8 +97,7 @@ public class Game implements ActionListener {
 	
 	//welcome screen
 	void gameOpenScreen() {
-		//game instruction
-		//formating with HTML
+		//game instructions
 		JLabel heading_lbl = new JLabel();
 		heading_lbl.setText("<html><body style='font-size: 15px; color: black; font-family: \"MV boli\" '>welcome to <span style='color:white; font-size:17px'>Fast React Game</span></body></html>");
 		heading_lbl.setBounds(150,10, 350,90);
@@ -222,8 +221,8 @@ public class Game implements ActionListener {
 		gameEnd_pnl.setVisible(false);	//hide gameEnd_pnl
 		play_pnl.setVisible(true);		//display play_pnl
 		
-		setButtonToScreen(); //re add display buttons to the screen
-		fill();	//start count down
+		setButtonToScreen(); 
+		fill();	
 		
 		label_score.setText("score: " + getScore()); //display score
 		SwingUtilities.updateComponentTreeUI(frame); //update the frame
@@ -289,14 +288,14 @@ public class Game implements ActionListener {
 	//function to set bounds for buttons
 	void setButtonToScreen(){
 		int i=0;
-		int [] indexing = rearrangeButtonsOrder(); //buttons order
+		int [] indexing = rearrangeButtonsOrder();
 		while(i<bounds.size()) {
-			//iterate through Map Data Structure to get coordinates for buttons 
+			
 			for(Map.Entry<Integer, Integer>  entry: bounds.entrySet()){
-				int key = entry.getKey();		//x coordinate
-				int value = entry.getValue();	//y coordinate
+				int key = entry.getKey();	
+				int value = entry.getValue();	
 		    	buttons[indexing[i]].setBounds(key, value, width, height);
-		    	i+=1;		//move to next buttons index
+		    	i+=1;
 			} 
 		}
 	}
@@ -304,17 +303,17 @@ public class Game implements ActionListener {
 	//count down timer function
 	public void fill() {
 		
-		progressbar.setForeground(Color.green); //start with a color of green
+		progressbar.setForeground(Color.green); 
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			int counter = 50;
 			@Override
 			public void run() {
 				
-				if(isOver == true) { //if game over cancel timer
+				if(isOver == true) { 
 					timer.cancel();
 				}
-				if(isWin == true) { //if player won cancel timer
+				if(isWin == true) {
 					timer.cancel(); 
 
 				}
@@ -322,17 +321,17 @@ public class Game implements ActionListener {
 				progressbar.setString(""+counter);
 
 				if(counter < 10) {
-					progressbar.setForeground(Color.red); //change progress bar color
+					progressbar.setForeground(Color.red); 
 				}
 				
 				if(counter >= 0) {
-					counter--;	//decrease timer
+					counter--;	
 					
-					setTimeTaken(timeTaken); //update timeTaken variable
+					setTimeTaken(timeTaken);
 				}
 				else {
 					timer.cancel();
-					gameEnd(-1); //timeout!; call getEnd to set up results for lose
+					gameEnd(-1);
 				}
 				
 			}
@@ -340,46 +339,46 @@ public class Game implements ActionListener {
 		
 		timer.scheduleAtFixedRate(task, 100, 1000);
 	}
-	//function to randomly rearrange  elements in an array
+	//function to rearrange  elements in an array
 	public int [] rearrangeButtonsOrder() {
 		
-		int [] v = new int[20];	//array of 20 values in ascending order for 0 to 19
+		int [] v = new int[20];
 		for(int i=0; i<v.length; i++) {
 			v[i] = i;
 		}
-		
-		//re arrange elements in array v
 		for (int i = 0; i < v.length; i++) {
 			int index = (int) (Math.random() * v.length);
 			int temp = v[i];
 			v[i] = v[index];
 			v[index] = temp;
 		 }
-		 return v; //re orders array
+		 return v;
 	}
-	void setTimeTaken(int time) {	//setter: timeTaken
+	
+	void setTimeTaken(int time) {
 		this.timeTaken = timeTaken + 1;
 	}
-	int getTimeTaken() {	//getter: timerTaken
+	
+	int getTimeTaken() {
 		return timeTaken;
 	}
-	void setScore(int score) { //setter: score
+	
+	void setScore(int score) {
 		this.score = score + 1;
 	}
-	int getScore() {	//getter: score
+	
+	int getScore() {
 		return score;
 	}
 	
 	//function to check the correctness of clicked button
 	public boolean isCorrect(List<Integer> order, int value) {
 		
-		//if list if not empty and first element is not 0, then clicked button is in correct
 		if(!order.isEmpty() && order.get(0) != 0) {
 			return false;
 		}
 		//for list > 1
 		if(order.size() > 1) {
-			//iterate through the list to check if all numbers are stores in ascending order, and item is +1 than the last stored item
 			for(int i=0; i< order.size(); i++) {
 				for(int j=1; j<order.size(); j++) {
 					if(order.get(j) != order.get(j-1) + 1) {
@@ -411,50 +410,47 @@ public class Game implements ActionListener {
 	//function to set game results values
 	void displayResults(int res) {
 				
-		if(res == -1) { 	//lose
-			
-			setResGame("Lose");		//update game result with 'lose'
-			setResScore(getScore());	//update final score
-			res_time_lbl.setText("Score: " + getResScore());	//display final score to the screen
+		if(res == -1) { 
+			setResGame("Lose");	
+			setResScore(getScore());	
+			res_time_lbl.setText("Score: " + getResScore());	
 			
 		}
-		else if(res == 1) { 	//win
-			
-			setResGame("Win");	//update game result with 'win'
-			res_time_lbl.setText("time: " + getTimeTaken() + "s"); //display time taken to finish game
+		else if(res == 1) { 
+			setResGame("Win");	
+			res_time_lbl.setText("time: " + getTimeTaken() + "s"); 
 		
 		}
 		else{
 			System.out.println("Error!!! game result: result must be 1 or zero");
 			
 		}
-		result_lbl.setText("You " + getResGame()+ "!"); // game results: 'you win!' / 'you lose!'
+		result_lbl.setText("You " + getResGame()+ "!");
 	} 
 	
 	//function to check is game is over
 	boolean isGameOver(int val){
-		//if val is not the correct button clicked; game is over
-		if(!isCorrect(correct_order, val)) {	//pass val to correct_order array to check is it passes order test
+
+		if(!isCorrect(correct_order, val)) {
 			return true;
 		}
-		//game is not yet over
 		return false; 
 	}
 
 	//function to display game over screen
-	void gameEnd(int res){ //res = 1 if win; else res = 0
+	void gameEnd(int res){
 		
 
-		displayResults(res); //display game results
+		displayResults(res);
 
-		play_pnl.setVisible(false);		//hide play_pnl
-		gameEnd_pnl.setVisible(true);	//display gameEnd_pnl
-		SwingUtilities.updateComponentTreeUI(frame); //update screen
+		play_pnl.setVisible(false);
+		gameEnd_pnl.setVisible(true);
+		SwingUtilities.updateComponentTreeUI(frame);
 	}
 	
 	//function to check is user has won
 	boolean isWin(int steps) {
-		if(steps==0) { 	//user won
+		if(steps==0) {
 			return true;
 
 		}
@@ -464,26 +460,22 @@ public class Game implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//for GameOnScreen
-
-		//loop through play buttons array and check if button clicked is in array
 		for(int i=0; i<buttons.length;i++) {
-			//if button is is array
 			if(e.getSource() == buttons[i]) {
-				steps--; 	//decrease steps left
-				correct_order.add(i);		//add clicked button to a correct order array list
-				isOver = isGameOver(i);		//check if added button is the correct clicked button
+				steps--; 
+				correct_order.add(i);		
+				isOver = isGameOver(i);	
 				
-				if(isOver) {			//if not correct: end game; call game end screen with lose parameter value (-1)
+				if(isOver) {
 					gameEnd(-1);
 					break;
 				}
-				setScore(score);	//increase score
-				label_score.setText("Score: " + getScore()); //update score to the screen
+				setScore(score);	
+				label_score.setText("Score: " + getScore()); 
 			}
 		}
-		isWin = isWin(steps);	//check is player won the game
-		if(isWin) {				//call game end screen with won parameter value(1)
+		isWin = isWin(steps);	
+		if(isWin) {				
 			gameEnd(1);
 		}
 	}
